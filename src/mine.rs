@@ -1,6 +1,9 @@
-use colored::*;
+
 use drillx::Solution;
+
 use futures_util::{SinkExt, StreamExt};
+use log::*;
+use log4rs;
 use ore_api::{
     consts::{BUS_ADDRESSES, BUS_COUNT, EPOCH_DURATION},
     state::{Config, Proof},
@@ -39,9 +42,6 @@ impl Miner {
         // Register, if needed.
         let signer = self.signer();
         self.open().await;
-
-        // Check num threads
-        self.check_num_cores(args.threads);
 
         // Start mining loop
         loop {
@@ -98,7 +98,7 @@ impl Miner {
         let url = format!("{ip}:{port}");
         let mut best_hash = String::from("value");
         let (mut ws_stream, _) = connect_async(url).await.expect("Failed to connect");
-
+        log4rs::init_file("log4rs.yaml", Default::default()).unwrap();
         let _ = send_proof(&mut ws_stream, proof).await;
 
         while let Some(message) = ws_stream.next().await {
@@ -128,22 +128,13 @@ impl Miner {
         let best_solution: ClientSolution =
             serde_json::from_str(&best_hash).expect("Failed to deserialize best hash");
 
-        println!("Difficulty: {:?}", best_solution.difficulty);
+        if best_solution.difficulty > 20 {
+            info!("difficulty --> {}", best_solution.difficulty);
+        } else {
+            warn!("High difficulty --> {}", best_solution.difficulty);
+        }
 
         Solution::new(best_solution.hash.d, best_solution.nonce.to_le_bytes())
-    }
-
-    pub fn check_num_cores(&self, threads: u64) {
-        // Check num threads
-        let num_cores = num_cpus::get() as u64;
-        if threads > num_cores {
-            println!(
-                "{} Number of threads ({}) exceeds available cores ({})",
-                "WARNING".bold().yellow(),
-                threads,
-                num_cores
-            );
-        }
     }
 
     async fn should_reset(&self, config: Config) -> bool {

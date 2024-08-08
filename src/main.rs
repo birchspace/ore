@@ -1,10 +1,5 @@
 mod args;
-mod balance;
-mod benchmark;
-mod busses;
 mod claim;
-mod close;
-mod config;
 mod constant;
 mod cu_limits;
 #[cfg(feature = "admin")]
@@ -12,10 +7,9 @@ mod initialize;
 mod jito;
 mod mine;
 mod open;
-mod rewards;
+
 mod send_and_confirm;
-mod stake;
-mod upgrade;
+
 mod utils;
 
 use std::sync::Arc;
@@ -36,39 +30,11 @@ struct Miner {
 
 #[derive(Subcommand, Debug)]
 enum Commands {
-    #[command(about = "Fetch an account balance")]
-    Balance(BalanceArgs),
-
-    #[command(about = "Benchmark your hashpower")]
-    Benchmark(BenchmarkArgs),
-
-    #[command(about = "Fetch the bus account balances")]
-    Busses(BussesArgs),
-
     #[command(about = "Claim your mining rewards")]
     Claim(ClaimArgs),
 
-    #[command(about = "Close your account to recover rent")]
-    Close(CloseArgs),
-
-    #[command(about = "Fetch the program config")]
-    Config(ConfigArgs),
-
     #[command(about = "Start mining")]
     Mine(MineArgs),
-
-    #[command(about = "Fetch the current reward rate for each difficulty level")]
-    Rewards(RewardsArgs),
-
-    #[command(about = "Stake to earn a rewards multiplier")]
-    Stake(StakeArgs),
-
-    #[command(about = "Upgrade your ORE tokens from v1 to v2")]
-    Upgrade(UpgradeArgs),
-
-    #[cfg(feature = "admin")]
-    #[command(about = "Initialize the program")]
-    Initialize(InitializeArgs),
 }
 
 #[derive(Parser, Debug)]
@@ -146,39 +112,12 @@ async fn main() {
 
     // Execute user command.
     match args.command {
-        Commands::Balance(args) => {
-            miner.balance(args).await;
-        }
-        Commands::Benchmark(args) => {
-            miner.benchmark(args).await;
-        }
-        Commands::Busses(_) => {
-            miner.busses().await;
-        }
         Commands::Claim(args) => {
             miner.claim(args).await;
         }
-        Commands::Close(_) => {
-            miner.close().await;
-        }
-        Commands::Config(_) => {
-            miner.config().await;
-        }
+
         Commands::Mine(args) => {
             miner.mine(args).await;
-        }
-        Commands::Rewards(_) => {
-            miner.rewards().await;
-        }
-        Commands::Stake(args) => {
-            miner.stake(args).await;
-        }
-        Commands::Upgrade(args) => {
-            miner.upgrade(args).await;
-        }
-        #[cfg(feature = "admin")]
-        Commands::Initialize(_) => {
-            miner.initialize().await;
         }
     }
 }
