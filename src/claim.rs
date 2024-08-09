@@ -30,35 +30,32 @@ impl Miner {
         let proof = get_proof_with_authority(&self.rpc_client, pubkey).await;
 
         let mut ixs = vec![];
-        let beneficiary = match args.to {
-            Some(to) => {
-                // Create beneficiary token account, if needed
-                let wallet = Pubkey::from_str(&to).expect("Failed to parse wallet address");
-                let benefiary_tokens = spl_associated_token_account::get_associated_token_address(
+        let wallet = Pubkey::from_str(&args.to).expect("Failed to parse wallet address");
+        println!("wallet{:?}", wallet);
+        let benefiary_tokens =
+            spl_associated_token_account::get_associated_token_address(&wallet, &MINT_ADDRESS);
+        if self
+            .rpc_client
+            .get_token_account(&benefiary_tokens)
+            .await
+            .is_err()
+        {
+            ixs.push(
+                spl_associated_token_account::instruction::create_associated_token_account(
+                    &signer.pubkey(),
                     &wallet,
-                    &MINT_ADDRESS,
-                );
-                if self
-                    .rpc_client
-                    .get_token_account(&benefiary_tokens)
-                    .await
-                    .is_err()
-                {
-                    ixs.push(
-                        spl_associated_token_account::instruction::create_associated_token_account(
-                            &signer.pubkey(),
-                            &wallet,
-                            &ore_api::consts::MINT_ADDRESS,
-                            &spl_token::id(),
-                        ),
-                    );
-                }
-                benefiary_tokens
-            }
-            None => self.initialize_ata().await,
-        };
+                    &ore_api::consts::MINT_ADDRESS,
+                    &spl_token::id(),
+                ),
+            );
+        }
 
-        info!("ore将被发送到{}", beneficiary.to_string());
+        info!("ore将被发送到{}", benefiary_tokens.to_string());
+        println!("benefiary_tokens{:?}:", benefiary_tokens);
+        println!(
+            "benefiary_tokens.to_string(){:?}:",
+            benefiary_tokens.to_string()
+        );
 
         // Parse amount to claim
         let amount = if let Some(amount) = args.amount {
@@ -70,42 +67,16 @@ impl Miner {
         // Send and confirm
 
         info!("正在发送交易...");
-        ixs.push(ore_api::instruction::claim(pubkey, beneficiary, amount));
+        ixs.push(ore_api::instruction::claim(
+            pubkey,
+            benefiary_tokens,
+            amount,
+        ));
         let res = self
             .send_and_confirm(&ixs, ComputeBudget::Fixed(CU_LIMIT_CLAIM), false)
             .await
             .ok();
         info!("交易已经发送: https://solscan.io/tx/{:?}", res);
-    }
-
-    async fn initialize_ata(&self) -> Pubkey {
-        // Initialize client.
-        let signer = self.signer();
-        let client = self.rpc_client.clone();
-
-        // Build instructions.
-        let token_account_pubkey = spl_associated_token_account::get_associated_token_address(
-            &signer.pubkey(),
-            &ore_api::consts::MINT_ADDRESS,
-        );
-
-        // Check if ata already exists
-        if let Ok(Some(_ata)) = client.get_token_account(&token_account_pubkey).await {
-            return token_account_pubkey;
-        }
-        // Sign and send transaction.
-        let ix = spl_associated_token_account::instruction::create_associated_token_account(
-            &signer.pubkey(),
-            &signer.pubkey(),
-            &ore_api::consts::MINT_ADDRESS,
-            &spl_token::id(),
-        );
-        self.send_and_confirm(&[ix], ComputeBudget::Dynamic, false)
-            .await
-            .ok();
-
-        // Return token account address
-        token_account_pubkey
     }
 
     pub async fn claim_from_keys(&self, args: ClaimArgs) {
@@ -134,7 +105,6 @@ impl Miner {
                     self.rpc_client.clone(),
                     self.priority_fee,
                     Some(keypair.to_base58_string()),
-                    self.tips.clone(),
                 );
 
                 let pubkey = miner.signer().pubkey();
@@ -183,6 +153,7 @@ impl Miner {
                         autoclaimnum: None,
                         check_time: 0,
                     };
+                    println!("to {:?}", args.to.clone());
                     miner.claim(claim_args).await;
                 } else {
                     info!("余额未达到最低提取数额, 开始执行下一个.");

@@ -98,56 +98,6 @@ impl std::fmt::Display for JitoTips {
     }
 }
 
-pub async fn subscribe_jito_tips(tips: Arc<RwLock<JitoTips>>) -> JoinHandle<()> {
-    tokio::spawn({
-        let tips = tips.clone();
-        async move {
-            let url = "ws://bundles-api-rest.jito.wtf/api/v1/bundles/tip_stream";
-
-            loop {
-                let stream = match tokio_tungstenite::connect_async(url).await {
-                    Ok((ws_stream, _)) => ws_stream,
-                    Err(err) => {
-                        tracing::error!("fail to connect to jito tip stream: {err:#}");
-                        tokio::time::sleep(tokio::time::Duration::from_secs(5)).await;
-                        continue;
-                    }
-                };
-
-                let (_, read) = stream.split();
-
-                read.for_each(|message| async {
-                    let data = match message {
-                        Ok(data) => data.into_data(),
-                        Err(err) => {
-                            tracing::error!("fail to read jito tips message: {err:#}");
-                            return;
-                        }
-                    };
-
-                    let data = match serde_json::from_slice::<Vec<JitoTips>>(&data) {
-                        Ok(t) => t,
-                        Err(err) => {
-                            tracing::error!("fail to parse jito tips: {err:#}");
-                            return;
-                        }
-                    };
-
-                    if data.is_empty() {
-                        return;
-                    }
-
-                    *tips.write().await = *data.first().unwrap();
-                })
-                .await;
-
-                tracing::info!("jito tip stream disconnected, retries in 5 seconds");
-                tokio::time::sleep(tokio::time::Duration::from_secs(5)).await;
-            }
-        }
-    })
-}
-
 impl JitoTips {
     pub fn p75(&self) -> u64 {
         (self.p75_landed * 1e9f64) as u64

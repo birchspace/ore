@@ -14,7 +14,7 @@ pub struct ClaimArgs {
         value_name = "WALLET_ADDRESS",
         help = "Wallet to receive claimed tokens."
     )]
-    pub to: Option<String>,
+    pub to: String,
 
     #[arg(long, help = "Path to keys.txt file containing private keys")]
     pub keys_file: String,

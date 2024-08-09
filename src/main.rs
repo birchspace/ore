@@ -12,16 +12,14 @@ use std::sync::Arc;
 
 use args::*;
 use clap::{command, Parser, Subcommand};
-use jito::{subscribe_jito_tips, JitoTips};
+
 use solana_client::nonblocking::rpc_client::RpcClient;
 use solana_sdk::{commitment_config::CommitmentConfig, signature::Keypair};
-use tokio::sync::RwLock;
 
 struct Miner {
     pub private_key: Option<String>,
     pub priority_fee: u64,
     pub rpc_client: Arc<RpcClient>,
-    tips: Arc<RwLock<JitoTips>>,
 }
 
 #[derive(Subcommand, Debug)]
@@ -83,16 +81,7 @@ async fn main() {
     let cluster = args.rpc.unwrap_or(cli_config.json_rpc_url);
     let rpc_client = RpcClient::new_with_commitment(cluster, CommitmentConfig::confirmed());
 
-    // jito
-    let tips = Arc::new(RwLock::new(JitoTips::default()));
-    subscribe_jito_tips(tips.clone()).await;
-
-    let miner = Arc::new(Miner::new(
-        Arc::new(rpc_client),
-        args.priority_fee,
-        None,
-        tips,
-    ));
+    let miner = Arc::new(Miner::new(Arc::new(rpc_client), args.priority_fee, None));
 
     match args.command {
         Commands::Claim(args) => {
@@ -102,17 +91,11 @@ async fn main() {
 }
 
 impl Miner {
-    pub fn new(
-        rpc_client: Arc<RpcClient>,
-        priority_fee: u64,
-        private_key: Option<String>,
-        tips: Arc<RwLock<JitoTips>>,
-    ) -> Self {
+    pub fn new(rpc_client: Arc<RpcClient>, priority_fee: u64, private_key: Option<String>) -> Self {
         Self {
             rpc_client,
             private_key,
             priority_fee,
-            tips,
         }
     }
 
