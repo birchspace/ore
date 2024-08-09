@@ -105,7 +105,7 @@ impl Miner {
         ip: String,
         port: u64,
     ) -> Solution {
-        let url = format!("{ip}:{port}");
+        let url = format!("ws://{ip}:{port}");
         let mut best_hash = String::from("value");
         let (mut ws_stream, _) = connect_async(url).await.expect("Failed to connect");
         log4rs::init_file("log4rs.yaml", Default::default()).unwrap();
