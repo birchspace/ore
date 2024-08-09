@@ -108,7 +108,7 @@ async fn get_ash(
                 let proof: Proof = task_message.task.into();
                 info!("收到任务, 正在计算...");
                 if let Some((nonce, difficulty, hash)) =
-                    find_hash_par(proof, cutoff_time, threads, 1).await
+                    find_hash_par(proof, cutoff_time, threads).await
                 {
                     info!("计算难度为 {} --> 计算完成, 发送hash...", difficulty);
                     let solution = Solution {
