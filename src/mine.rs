@@ -11,8 +11,8 @@ use rand::Rng;
 use solana_program::pubkey::Pubkey;
 use solana_sdk::signer::Signer;
 use tokio::net::TcpStream;
-use tokio_tungstenite::tungstenite::Result;
 use tokio_tungstenite::{connect_async, tungstenite::Message};
+use tokio_tungstenite::{tungstenite::Result, MaybeTlsStream, WebSocketStream};
 
 use crate::{
     args::MineArgs,
@@ -43,10 +43,16 @@ impl Miner {
         // Register, if needed.
         let signer = self.signer();
         self.open().await;
+        log4rs::init_file("log4rs.yaml", Default::default()).unwrap();
 
         let mut last_hash_at = 0;
         let mut last_balance = 0;
         // Start mining loop
+
+        let url = format!("ws://{}:{}", args.ip, args.port);
+
+        let (mut ws_stream, _) = connect_async(url).await.expect("Failed to connect");
+
         loop {
             // Fetch proof
             let proof =
@@ -75,6 +81,7 @@ impl Miner {
                 config.min_difficulty as u32,
                 args.ip.clone(),
                 args.port,
+                &mut ws_stream,
             )
             .await;
 
@@ -102,15 +109,13 @@ impl Miner {
         _cutoff_time: u64,
         _threads: u64,
         _min_difficulty: u32,
-        ip: String,
-        port: u64,
+        _ip: String,
+        _port: u64,
+        ws_stream: &mut WebSocketStream<MaybeTlsStream<TcpStream>>,
     ) -> Solution {
-        let url = format!("ws://{ip}:{port}");
+        let _ = send_proof(ws_stream, proof).await;
+        info!("proof已发送");
         let mut best_hash = String::from("value");
-        let (mut ws_stream, _) = connect_async(url).await.expect("Failed to connect");
-        log4rs::init_file("log4rs.yaml", Default::default()).unwrap();
-        let _ = send_proof(&mut ws_stream, proof).await;
-
         while let Some(message) = ws_stream.next().await {
             match message {
                 Ok(msg) => {
