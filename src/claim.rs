@@ -148,7 +148,7 @@ impl Miner {
                         autoclaimnum: None,
                         check_time: 0,
                     };
-                    println!("to {:?}", args.to.clone());
+
                     miner.claim(claim_args).await;
                 } else {
                     info!("余额未达到最低提取数额, 开始执行下一个.");
