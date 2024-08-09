@@ -15,7 +15,7 @@ use clap::{arg, command, Parser};
 #[command(version, about, long_about = None)]
 struct Args {
     #[arg(long, value_name = "IP", help = "ip", global = true)]
-    ip: u64,
+    ip: String,
 
     #[arg(long, value_name = "PORT", help = "port", global = true)]
     port: u64,
