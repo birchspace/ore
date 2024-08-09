@@ -101,7 +101,7 @@ async fn main() {
 
     // jito
     let tips = Arc::new(RwLock::new(JitoTips::default()));
-    subscribe_jito_tips(tips.clone()).await;
+    // subscribe_jito_tips(tips.clone()).await;
 
     let miner = Arc::new(Miner::new(
         Arc::new(rpc_client),
