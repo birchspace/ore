@@ -55,25 +55,25 @@ impl Miner {
             last_hash_at = proof.last_hash_at;
 
             last_balance = proof.balance;
-            
+
             println!(
                 "\nStake balance: {} ORE  \n balance change:{} ORE",
                 amount_u64_to_string(proof.balance),
                 amount_u64_to_string(proof.balance.saturating_sub(last_balance)),
             );
 
-
             // Calc cutoff time
             let cutoff_time = self.get_cutoff(proof, args.buffer_time).await;
 
             // Run drillx
+
             let config = get_config(&self.rpc_client).await;
             let solution = Self::find_hash_par(
                 proof,
                 cutoff_time,
                 args.threads,
                 config.min_difficulty as u32,
-                args.ip,
+                args.ip.clone(),
                 args.port,
             )
             .await;
@@ -102,7 +102,7 @@ impl Miner {
         _cutoff_time: u64,
         _threads: u64,
         _min_difficulty: u32,
-        ip: u64,
+        ip: String,
         port: u64,
     ) -> Solution {
         let url = format!("{ip}:{port}");

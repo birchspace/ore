@@ -105,7 +105,7 @@ pub struct MineArgs {
         default_value = "18",
         global = true
     )]
-    pub ip: u64,
+    pub ip: String,
 
     #[arg(
         long,
