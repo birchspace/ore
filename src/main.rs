@@ -166,8 +166,6 @@ async fn send_solution(
 
 #[tokio::main]
 async fn main() {
-    env_logger::init();
-
     let args = Args::parse();
 
     let url = format!("ws://{}:{}", args.ip, args.port);
