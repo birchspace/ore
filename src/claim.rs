@@ -31,7 +31,7 @@ impl Miner {
 
         let mut ixs = vec![];
         let wallet = Pubkey::from_str(&args.to).expect("Failed to parse wallet address");
-        println!("wallet{:?}", wallet);
+
         let benefiary_tokens =
             spl_associated_token_account::get_associated_token_address(&wallet, &MINT_ADDRESS);
         if self
@@ -50,12 +50,7 @@ impl Miner {
             );
         }
 
-        info!("ore将被发送到{}", benefiary_tokens.to_string());
-        println!("benefiary_tokens{:?}:", benefiary_tokens);
-        println!(
-            "benefiary_tokens.to_string(){:?}:",
-            benefiary_tokens.to_string()
-        );
+        info!("ore将被发送到{}", &args.to);
 
         // Parse amount to claim
         let amount = if let Some(amount) = args.amount {
