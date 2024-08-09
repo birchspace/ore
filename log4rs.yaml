@@ -5,11 +5,11 @@ appenders:
     kind: console
     encoder:
       pattern: "{d(%Y-%m-%d %H:%M:%S.%f)} [{l}] {t} - {m}{n}"
-  
+
   rolling_file:
     kind: rolling_file
     path: logs/test.log
-    append: true 
+    append: true
     encoder:
       pattern: "{d(%Y-%m-%d %H:%M:%S.%f)} [{l}] {t} - {m}{n}"
     policy:
@@ -17,14 +17,38 @@ appenders:
       trigger:
         kind: size
         limit: 10 mb
-      roller:        
+      roller:
         kind: fixed_window
         pattern: logs/test.{}.log
         base: 1
         count: 5
-        
+
+  difficulty_file:
+    kind: rolling_file
+    path: logs/difficulty.log
+    append: true
+    encoder:
+      pattern: "{d(%Y-%m-%d %H:%M:%S.%f)} - Difficulty: {m}{n}"
+    policy:
+      kind: compound
+      trigger:
+        kind: size
+        limit: 10 mb
+      roller:
+        kind: fixed_window
+        pattern: logs/difficulty.{}.log
+        base: 1
+        count: 5
+
+loggers:
+  difficulty_logger:
+    level: info
+    appenders:
+      - difficulty_file
+    additive: false
+
 root:
-  level: info 
+  level: info
   appenders:
     - stdout
     - rolling_file
