@@ -1,0 +1,46 @@
+name: ORE Client
+
+on:
+  push:
+    branches:
+      - client_worker
+    tags:
+      - "v*"
+
+env:
+  CARGO_TERM_COLOR: always
+  REPO_NAME: ${{ github.event.repository.name }}
+  DOCKER_USER: ${{ github.actor }}
+  DOCKER_PASS: ${{ secrets.GH_TOKEN }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build
+        run: cargo build --release --verbose
+
+      - name: Run tests
+        run: cargo test --verbose
+
+      - name: Docker login
+        run: echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin ghcr.io
+
+      - name: Determine Docker Tag
+        id: tag
+        run: |
+          echo "TAG_NAME=client_worker" >> $GITHUB_ENV
+
+      - name: Build Docker Image
+        run: docker build . --file Dockerfile --tag ghcr.io/$DOCKER_USER/$REPO_NAME:${{ env.TAG_NAME }}
+
+      - name: Push Docker Image
+        run: docker push ghcr.io/$DOCKER_USER/$REPO_NAME:${{ env.TAG_NAME }}
+
+      - name: Update Latest Tag
+        if: github.ref == 'refs/heads/client_worker'
+        run: |
+          docker tag ghcr.io/$DOCKER_USER/$REPO_NAME:${{ env.TAG_NAME }} ghcr.io/$DOCKER_USER/$REPO_NAME:latest
