@@ -258,6 +258,7 @@ async fn handle_text_message(state: &Arc<ServerState>, peer: &SocketAddr, text: 
     } else {
         warn!("未知消息来自节点 {}: {:?}", peer, text);
     }
+    state.log_server_status();
 }
 
 async fn distribute_tasks(state: Arc<ServerState>, proof: &Proof) {
