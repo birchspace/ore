@@ -1,5 +1,3 @@
-use std::io::Read;
-
 use cached::proc_macro::cached;
 use ore_api::{
     consts::{CONFIG_ADDRESS, MINT_ADDRESS, PROOF, TOKEN_DECIMALS, TREASURY_ADDRESS},
@@ -10,6 +8,7 @@ use solana_client::nonblocking::rpc_client::RpcClient;
 use solana_program::{pubkey::Pubkey, sysvar};
 use solana_sdk::clock::Clock;
 use spl_associated_token_account::get_associated_token_address;
+use std::{io::Read, time::Duration};
 
 pub async fn _get_treasury(client: &RpcClient) -> Treasury {
     let data = client
@@ -70,6 +69,20 @@ pub fn ask_confirm(question: &str) -> bool {
             'n' | 'N' => return false,
             _ => println!("y/n only please."),
         }
+    }
+}
+
+pub async fn get_updated_proof_with_authority(
+    client: &RpcClient,
+    authority: Pubkey,
+    lash_hash_at: i64,
+) -> Proof {
+    loop {
+        let proof = get_proof_with_authority(client, authority).await;
+        if proof.last_hash_at.gt(&lash_hash_at) {
+            return proof;
+        }
+        std::thread::sleep(Duration::from_millis(1000));
     }
 }
 

@@ -1,4 +1,3 @@
-
 use drillx::Solution;
 
 use futures_util::{SinkExt, StreamExt};
@@ -18,7 +17,9 @@ use tokio_tungstenite::{connect_async, tungstenite::Message};
 use crate::{
     args::MineArgs,
     send_and_confirm::ComputeBudget,
-    utils::{amount_u64_to_string, get_clock, get_config, get_proof_with_authority, proof_pubkey},
+    utils::{
+        amount_u64_to_string, get_clock, get_config, get_updated_proof_with_authority, proof_pubkey,
+    },
     Miner,
 };
 
@@ -43,15 +44,24 @@ impl Miner {
         let signer = self.signer();
         self.open().await;
 
+        let mut last_hash_at = 0;
+        let mut last_balance = 0;
         // Start mining loop
         loop {
             // Fetch proof
-            let proof = get_proof_with_authority(&self.rpc_client, signer.pubkey()).await;
+            let proof =
+                get_updated_proof_with_authority(&self.rpc_client, signer.pubkey(), last_hash_at)
+                    .await;
+            last_hash_at = proof.last_hash_at;
 
+            last_balance = proof.balance;
+            
             println!(
-                "\nStake balance: {} ORE",
-                amount_u64_to_string(proof.balance)
+                "\nStake balance: {} ORE  \n balance change:{} ORE",
+                amount_u64_to_string(proof.balance),
+                amount_u64_to_string(proof.balance.saturating_sub(last_balance)),
             );
+
 
             // Calc cutoff time
             let cutoff_time = self.get_cutoff(proof, args.buffer_time).await;
