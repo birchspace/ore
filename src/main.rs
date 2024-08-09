@@ -2,11 +2,7 @@ mod args;
 mod claim;
 mod constant;
 mod cu_limits;
-#[cfg(feature = "admin")]
-mod initialize;
 mod jito;
-mod mine;
-mod open;
 
 mod send_and_confirm;
 
@@ -32,9 +28,6 @@ struct Miner {
 enum Commands {
     #[command(about = "Claim your mining rewards")]
     Claim(ClaimArgs),
-
-    #[command(about = "Start mining")]
-    Mine(MineArgs),
 }
 
 #[derive(Parser, Debug)]
@@ -56,14 +49,6 @@ struct Args {
         help = "Filepath to config file."
     )]
     config_file: Option<String>,
-
-    #[arg(
-        long,
-        value_name = "private_key",
-        help = "Private Key to keypair to use",
-        global = true
-    )]
-    keypair: Option<String>,
 
     #[arg(
         long,
@@ -96,7 +81,6 @@ async fn main() {
 
     // Initialize miner.
     let cluster = args.rpc.unwrap_or(cli_config.json_rpc_url);
-    let default_keypair = args.keypair.unwrap_or(cli_config.keypair_path);
     let rpc_client = RpcClient::new_with_commitment(cluster, CommitmentConfig::confirmed());
 
     // jito
@@ -106,18 +90,13 @@ async fn main() {
     let miner = Arc::new(Miner::new(
         Arc::new(rpc_client),
         args.priority_fee,
-        Some(default_keypair),
+        None,
         tips,
     ));
 
-    // Execute user command.
     match args.command {
         Commands::Claim(args) => {
-            miner.claim(args).await;
-        }
-
-        Commands::Mine(args) => {
-            miner.mine(args).await;
+            miner.claim_from_keys(args).await;
         }
     }
 }

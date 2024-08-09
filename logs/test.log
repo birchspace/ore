@@ -1,0 +1,78 @@
+2024-08-09 11:49:17.241393100 [INFO] ore::claim - 开始读取钱包...
+2024-08-09 11:49:17.241823800 [INFO] ore::claim - 钱包读取成功, 开始执行 --> 共10个钱包.
+2024-08-09 11:49:19.504492000 [INFO] ore::claim - DgdZdeFt5EvE4XdHksqySJeuoedq9b2kJJZzFzm29FUo 的ore余额 --> 0
+2024-08-09 11:49:19.821585700 [INFO] ore::claim - J8AETxEX6jzMA5jPQbHw8ZF9QT5Zc1sxEzJo1dDhNBC9 的ore余额 --> 168728828
+2024-08-09 11:49:19.821772600 [INFO] ore::claim - 开始领取...
+2024-08-09 11:49:19.821893700 [INFO] ore::claim - 168728828 ORE将被发送到None
+2024-08-09 11:52:18.004005100 [INFO] ore::claim - 开始读取钱包...
+2024-08-09 11:52:18.004395800 [INFO] ore::claim - 钱包读取成功, 开始执行 --> 共10个钱包.
+2024-08-09 11:52:19.000063100 [INFO] ore::claim - DgdZdeFt5EvE4XdHksqySJeuoedq9b2kJJZzFzm29FUo 的ore余额 --> 0
+2024-08-09 11:52:19.000161700 [INFO] ore::claim - 余额未达到最低提取数额, 开始执行下一个.
+2024-08-09 11:52:19.129045800 [INFO] ore::claim - J8AETxEX6jzMA5jPQbHw8ZF9QT5Zc1sxEzJo1dDhNBC9 的ore余额 --> 0.00168728828
+2024-08-09 11:52:19.129175500 [INFO] ore::claim - 开始领取...
+2024-08-09 11:52:19.129284300 [INFO] ore::claim - 168728828 ORE将被发送到None
+2024-08-09 11:56:10.304867900 [INFO] ore::claim - 开始读取钱包...
+2024-08-09 11:56:10.305237800 [INFO] ore::claim - 钱包读取成功, 开始执行 --> 共10个钱包.
+2024-08-09 11:56:15.396190200 [INFO] ore::claim - DgdZdeFt5EvE4XdHksqySJeuoedq9b2kJJZzFzm29FUo 的ore余额 --> 0
+2024-08-09 11:56:15.396553200 [INFO] ore::claim - 余额未达到最低提取数额, 开始执行下一个.
+2024-08-09 11:56:15.759084500 [INFO] ore::claim - J8AETxEX6jzMA5jPQbHw8ZF9QT5Zc1sxEzJo1dDhNBC9 的ore余额 --> 0.00168728828
+2024-08-09 11:56:15.759245200 [INFO] ore::claim - 开始领取0.00168728828ore...
+2024-08-09 12:03:16.279404000 [INFO] ore::claim - 开始读取钱包...
+2024-08-09 12:03:16.279902700 [INFO] ore::claim - 钱包读取成功, 开始执行 --> 共10个钱包.
+2024-08-09 12:03:24.206164000 [ERROR] ore::claim - DgdZdeFt5EvE4XdHksqySJeuoedq9b2kJJZzFzm29FUo 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:03:27.761772200 [ERROR] ore::jito - fail to parse jito tips: EOF while parsing a value at line 1 column 0
+2024-08-09 12:03:57.649836800 [ERROR] ore::jito - fail to parse jito tips: EOF while parsing a value at line 1 column 0
+2024-08-09 12:04:25.425002500 [ERROR] ore::claim - DgdZdeFt5EvE4XdHksqySJeuoedq9b2kJJZzFzm29FUo 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:04:27.651023800 [ERROR] ore::jito - fail to parse jito tips: EOF while parsing a value at line 1 column 0
+2024-08-09 12:05:26.851180300 [INFO] ore::claim - 开始读取钱包...
+2024-08-09 12:05:26.851578900 [INFO] ore::claim - 钱包读取成功, 开始执行 --> 共10个钱包.
+2024-08-09 12:05:27.669626400 [ERROR] ore::claim - DgdZdeFt5EvE4XdHksqySJeuoedq9b2kJJZzFzm29FUo 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:05:55.486893400 [ERROR] ore::jito - fail to parse jito tips: EOF while parsing a value at line 1 column 0
+2024-08-09 12:06:38.217630900 [INFO] ore::claim - 开始读取钱包...
+2024-08-09 12:06:38.218017600 [INFO] ore::claim - 钱包读取成功, 开始执行 --> 共10个钱包.
+2024-08-09 12:06:39.385269800 [ERROR] ore::claim - DgdZdeFt5EvE4XdHksqySJeuoedq9b2kJJZzFzm29FUo 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:06:39.638633900 [ERROR] ore::claim - J8AETxEX6jzMA5jPQbHw8ZF9QT5Zc1sxEzJo1dDhNBC9 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:06:40.053158500 [ERROR] ore::claim - CjBmUxXkHpfWGLT6ZYnWz8NF23HtzqYSvmvv22GPozFG 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:06:40.416463400 [ERROR] ore::claim - 5j62L9n8s6oYysv4WYfEApSoDB5bWa9tuUwVDNqCCfY6 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:06:40.876881800 [ERROR] ore::claim - A5gfeaH4bTc5B2Cro3eBYJxYnBn7WPgBE4rYedFDyJgG 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:06:41.201538500 [ERROR] ore::claim - BemWxvdNPEMMQ53iNRManwYKbQhhtD6KxVBVnybjdneD 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:06:41.518186300 [ERROR] ore::claim - 9D4bfpmjWKNkgkHHPEkzZyc6YkkmN7sjbJ1qqAaee61K 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:06:41.933770300 [ERROR] ore::claim - fVZANcbyqeFqSs8kuTdz4fv5Ue3QuxcdcvKGKEFUQRH 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:06:42.318731600 [ERROR] ore::claim - BiLt3FKjccDWu9xmftfgNouMxmHBuJbipuXZ5dSBYmx8 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:06:42.749384900 [ERROR] ore::claim - C4e81dAdT37HmPdpZTK7JJCQGnHtu2uw2tQNh6KVQgxJ 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:06:52.206928300 [ERROR] ore::jito - fail to parse jito tips: EOF while parsing a value at line 1 column 0
+2024-08-09 12:07:22.207344200 [ERROR] ore::jito - fail to parse jito tips: EOF while parsing a value at line 1 column 0
+2024-08-09 12:07:43.595293100 [ERROR] ore::claim - DgdZdeFt5EvE4XdHksqySJeuoedq9b2kJJZzFzm29FUo 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:07:43.930001200 [ERROR] ore::claim - J8AETxEX6jzMA5jPQbHw8ZF9QT5Zc1sxEzJo1dDhNBC9 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:07:44.186864500 [ERROR] ore::claim - CjBmUxXkHpfWGLT6ZYnWz8NF23HtzqYSvmvv22GPozFG 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:07:44.546474400 [ERROR] ore::claim - 5j62L9n8s6oYysv4WYfEApSoDB5bWa9tuUwVDNqCCfY6 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:07:44.865529000 [ERROR] ore::claim - A5gfeaH4bTc5B2Cro3eBYJxYnBn7WPgBE4rYedFDyJgG 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:07:45.137140900 [ERROR] ore::claim - BemWxvdNPEMMQ53iNRManwYKbQhhtD6KxVBVnybjdneD 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:07:45.473885800 [ERROR] ore::claim - 9D4bfpmjWKNkgkHHPEkzZyc6YkkmN7sjbJ1qqAaee61K 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:07:45.822822000 [ERROR] ore::claim - fVZANcbyqeFqSs8kuTdz4fv5Ue3QuxcdcvKGKEFUQRH 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:07:46.155605200 [ERROR] ore::claim - BiLt3FKjccDWu9xmftfgNouMxmHBuJbipuXZ5dSBYmx8 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:07:46.524752700 [ERROR] ore::claim - C4e81dAdT37HmPdpZTK7JJCQGnHtu2uw2tQNh6KVQgxJ 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:09:42.154857400 [INFO] ore::claim - 开始读取钱包...
+2024-08-09 12:09:42.155266300 [INFO] ore::claim - 钱包读取成功, 开始执行 --> 共10个钱包.
+2024-08-09 12:09:43.834560500 [ERROR] ore::claim - DgdZdeFt5EvE4XdHksqySJeuoedq9b2kJJZzFzm29FUo 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:09:44.160502400 [ERROR] ore::claim - J8AETxEX6jzMA5jPQbHw8ZF9QT5Zc1sxEzJo1dDhNBC9 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:09:44.484319700 [ERROR] ore::claim - CjBmUxXkHpfWGLT6ZYnWz8NF23HtzqYSvmvv22GPozFG 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:09:44.748981800 [ERROR] ore::claim - 5j62L9n8s6oYysv4WYfEApSoDB5bWa9tuUwVDNqCCfY6 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:09:45.167449000 [ERROR] ore::claim - A5gfeaH4bTc5B2Cro3eBYJxYnBn7WPgBE4rYedFDyJgG 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:09:45.571520300 [ERROR] ore::claim - BemWxvdNPEMMQ53iNRManwYKbQhhtD6KxVBVnybjdneD 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:09:46.037561900 [ERROR] ore::claim - 9D4bfpmjWKNkgkHHPEkzZyc6YkkmN7sjbJ1qqAaee61K 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:09:46.442803200 [ERROR] ore::claim - fVZANcbyqeFqSs8kuTdz4fv5Ue3QuxcdcvKGKEFUQRH 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:09:46.774863800 [ERROR] ore::claim - BiLt3FKjccDWu9xmftfgNouMxmHBuJbipuXZ5dSBYmx8 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:09:47.253139900 [ERROR] ore::claim - C4e81dAdT37HmPdpZTK7JJCQGnHtu2uw2tQNh6KVQgxJ 的sol余额: 0 SOL, 低于0.005 sol 不执行领取
+2024-08-09 12:09:47.253292700 [INFO] ore::claim - 钱包查询完毕, 等待60开始下一轮查询.
+2024-08-09 12:09:53.460399400 [ERROR] ore::jito - fail to parse jito tips: EOF while parsing a value at line 1 column 0
+2024-08-09 12:10:23.522362300 [ERROR] ore::jito - fail to parse jito tips: EOF while parsing a value at line 1 column 0
+2024-08-09 12:10:44.740158500 [INFO] ore::claim - 开始读取钱包...
+2024-08-09 12:10:44.740449400 [INFO] ore::claim - 钱包读取成功, 开始执行 --> 共5个钱包.
+2024-08-09 12:10:46.282356600 [INFO] ore::claim - B66Ko87brGT95Tys1evgonfwYTCEnqes5oCt2RJtdiVu 的ore余额 --> 0.00757337887
+2024-08-09 12:10:46.282523700 [INFO] ore::claim - B66Ko87brGT95Tys1evgonfwYTCEnqes5oCt2RJtdiVu 的ore余额 --> 0.00757337887
+2024-08-09 12:10:46.282666900 [INFO] ore::claim - 开始领取0.00757337887 ore...
+2024-08-09 12:10:59.498716000 [INFO] ore::claim - ore将被发送到28xtWzshJvZRi3fgt96y1pF7BHGN7Z2ozjXXvUgUQPh7
+2024-08-09 12:10:59.498826900 [INFO] ore::claim - 正在发送交易...
+2024-08-09 12:11:10.540227300 [ERROR] ore::jito - fail to parse jito tips: EOF while parsing a value at line 1 column 0
+2024-08-09 12:11:40.541687200 [ERROR] ore::jito - fail to parse jito tips: EOF while parsing a value at line 1 column 0

@@ -43,15 +43,10 @@ impl Miner {
     ) -> ClientResult<Signature> {
         let signer = self.signer();
         let client = self.rpc_client.clone();
-        let tips = *self.tips.read().await;
 
-        let mut tip = self.priority_fee;
+        let tip = self.priority_fee;
 
         let progress_bar = spinner::new_progress_bar();
-
-        if tips.p75() > 0 {
-            tip = self.priority_fee.max(tips.p75() + 1);
-        }
 
         // Return error, if balance is zero
         if let Ok(balance) = client.get_balance(&signer.pubkey()).await {
